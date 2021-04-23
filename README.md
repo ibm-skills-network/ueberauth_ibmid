@@ -84,16 +84,10 @@ Depending on the configured url you can initialize the request through:
 
 /auth/ibmid
 
-Or with options:
-
-/auth/ibmid?scope=identify%20email&prompt=none&permissions=452987952
-
-By default the requested scope is "identify". Scope can be configured either explicitly as a `scope` query value on the request path or in your configuration:
-
 ```elixir
 config :ueberauth, Ueberauth,
   providers: [
-    ibmid: {Ueberauth.Strategy.IBMId, [default_scope: "identify email connections guilds"]}
+    ibmid: {Ueberauth.Strategy.IBMId, [default_scope: "openid"]}
   ]
 ```
 

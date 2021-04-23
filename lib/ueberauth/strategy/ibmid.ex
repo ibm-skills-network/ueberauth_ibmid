@@ -5,7 +5,7 @@ defmodule Ueberauth.Strategy.IBMId do
 
   use Ueberauth.Strategy,
     uid_field: :id,
-    default_scope: "",
+    default_scope: "openid",
     oauth2_module: Ueberauth.Strategy.IBMId.OAuth
 
   alias Ueberauth.Auth.Info

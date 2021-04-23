@@ -2,7 +2,7 @@ defmodule UeberauthIBMId.Mixfile do
   use Mix.Project
 
   @version "0.1.0"
-  @url "https://github.com/benhonda/ueberauth_ibmid"
+  @url "https://github.com/ibm-skills-network/ueberauth_ibmid"
 
   def project do
     [
