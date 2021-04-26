@@ -27,10 +27,9 @@ defmodule UeberauthIBMId.Mixfile do
 
   defp deps do
     [
-      {:ueberauth, "~> 0.6.3"},
-      {:oauth2, "~> 1.0 or ~> 2.0"},
-      {:ex_doc, "~> 0.19", only: :dev},
-      {:earmark, ">= 0.0.0", only: :dev}
+      {:oauth2, "~> 2.0"},
+      {:ueberauth, "~> 0.6"},
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false}
     ]
   end
 

@@ -4,7 +4,7 @@ defmodule Ueberauth.Strategy.IBMId do
   """
 
   use Ueberauth.Strategy,
-    uid_field: :id,
+    uid_field: :uniqueSecurityName,
     default_scope: "openid",
     oauth2_module: Ueberauth.Strategy.IBMId.OAuth
 
@@ -18,9 +18,7 @@ defmodule Ueberauth.Strategy.IBMId do
   def handle_request!(conn) do
     scopes = conn.params["scope"] || option(conn, :default_scope)
 
-    opts =
-      [scope: scopes]
-      |> Keyword.put(:redirect_uri, callback_url(conn))
+    opts = [redirect_uri: callback_url(conn), scope: scopes]
 
     module = option(conn, :oauth2_module)
     redirect!(conn, apply(module, :authorize_url!, [opts]))
@@ -29,10 +27,7 @@ defmodule Ueberauth.Strategy.IBMId do
   @doc false
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
     module = option(conn, :oauth2_module)
-    token = apply(module, :get_token!, [[code: code]])
-
-    # opts = [redirect_uri: callback_url(conn)]
-    # token = Ueberauth.Strategy.IBMId.OAuth.get_token!([code: code], opts)
+    token = apply(module, :get_token!, [[code: code, redirect_uri: callback_url(conn)]])
 
     if token.access_token == nil do
       err = token.other_params["error"]
@@ -64,7 +59,11 @@ defmodule Ueberauth.Strategy.IBMId do
   end
 
   defp fetch_user(conn, token) do
-    resp = Ueberauth.Strategy.IBMId.OAuth.get(token, "/userinfo")
+    resp =
+      Ueberauth.Strategy.IBMId.OAuth.get(
+        token,
+        "https://login.ibm.com/oidc/endpoint/default/userinfo"
+      )
 
     case resp do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->

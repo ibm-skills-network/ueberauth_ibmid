@@ -4,21 +4,21 @@
 
 ## Installation
 
-1. Setup your application with [AppID](https://cloud.ibm.com/docs/appid).
+1. Setup your application with IBM Security Verify to get a Client ID and Secret. Ensure that a callback URL is specified in the OpenID Connect configuration (i.e. `https://localhost:PORT/auth/ibmid/callback`). [Learn more about IBM Security Verify & OpenID Connect](https://www.ibm.com/docs/en/security-verify?topic=sign-configuring-single-in-openid-connect-provider).
+
+NOTE: IBMId only allows HTTPS callback URLs. [Learn how to serve a Phoenix App locally with HTTPS](https://til.hashrocket.com/posts/b8p5oalouz--serve-phoenix-app-locally-with-https-).
 
 1. Add `:ueberauth_ibmid` to your list of dependencies in `mix.exs`:
 
    ```elixir
    def deps do
-     [{:ueberauth_ibmid, "~> 0.1"}]
-   end
-   ```
+    [
+      ...
 
-1. (Maybe) Add the strategy to your applications:
+      {:ueberauth_ibmid, "~> 0.1.0"}
 
-   ```elixir
-   def application do
-     [applications: [:ueberauth_ibmid]]
+      ...
+    ]
    end
    ```
 
@@ -72,22 +72,20 @@
    end
    ```
 
-   And make sure to set the correct redirect URI(s) in your AppID application to wire up the callback.
-
 1. Your controller needs to implement callbacks to deal with `Ueberauth.Auth` and `Ueberauth.Failure` responses.
-
-For an example implementation see the [Überauth Example](https://github.com/ueberauth/ueberauth_example) application.
 
 ## Calling
 
-Depending on the configured url you can initialize the request through:
+You can initialize the request through:
 
 /auth/ibmid
+
+By default the requested scope is "openid", which also happens to be the only required scope. Scope can be configured explicitly in your configuration (see below). [Learn more about OIDC scopes](https://auth0.com/docs/scopes/openid-connect-scopes).
 
 ```elixir
 config :ueberauth, Ueberauth,
   providers: [
-    ibmid: {Ueberauth.Strategy.IBMId, [default_scope: "openid"]}
+    ibmid: {Ueberauth.Strategy.IBMId, [default_scope: "openid profile"]}
   ]
 ```
 
