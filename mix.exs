@@ -29,7 +29,7 @@ defmodule UeberauthIBMId.Mixfile do
     [
       {:oauth2, "~> 2.0"},
       {:ueberauth, "~> 0.6"},
-      {:ex_doc, "~> 0.23", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false}
     ]
   end
 
