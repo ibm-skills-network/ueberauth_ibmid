@@ -6,7 +6,7 @@ defmodule UeberauthIBMId.Mixfile do
 
   def project do
     [
-      app: :ueberauth_ibmid_1,
+      app: :ueberauth_ibmid,
       version: @version,
       elixir: "~> 1.11",
       name: "Überauth IBMId",
