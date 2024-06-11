@@ -11,6 +11,7 @@ defmodule Ueberauth.Strategy.IBMId do
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
+  alias Ueberauth.Strategy.Helpers
 
   @doc """
   Handles initial request for IBMId authentication.
@@ -18,7 +19,7 @@ defmodule Ueberauth.Strategy.IBMId do
   def handle_request!(conn) do
     scopes = conn.params["scope"] || option(conn, :default_scope)
 
-    opts = [redirect_uri: callback_url(conn), scope: scopes]
+    opts = [redirect_uri: callback_url(conn), scope: scopes] |> Helpers.with_state_param(conn)
 
     module = option(conn, :oauth2_module)
     redirect!(conn, apply(module, :authorize_url!, [opts]))
