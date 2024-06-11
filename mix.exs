@@ -1,15 +1,15 @@
 defmodule UeberauthIBMId.Mixfile do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.2"
   @url "https://github.com/ibm-skills-network/ueberauth_ibmid"
 
   def project do
     [
-      app: :ueberauth_ibmid,
+      app: :ueberauth_ibmid_1,
       version: @version,
-      elixir: "~> 1.3",
-      name: "Ueberauth IBMId",
+      elixir: "~> 1.11",
+      name: "Überauth IBMId",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: @url,
@@ -44,7 +44,7 @@ defmodule UeberauthIBMId.Mixfile do
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      maintainers: ["Ben Honda"],
+      maintainers: ["IBM Skills Network"],
       licenses: ["MIT"],
       links: %{GitHub: @url}
     ]
